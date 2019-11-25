@@ -1,0 +1,40 @@
+def ebath():
+    locations = ("ebathroom", "gym", "library")
+    choice = ""
+    while choice not in locations:
+        choice = input("gym or library?\n--> ")
+        if choice == "gym":
+            print("you move to the gym")
+            gym()
+        if choice == "library":
+            print("you go to the library")
+            library()
+
+
+def gym():
+    locations = ("ebathroom", "gym", "library")
+    choice = ""
+    while choice not in locations:
+        choice = input("back to ebathroom or go to library?\n--> ")
+        if choice == "ebathroom":
+            print("you go to ebathroom")
+            ebath()
+        if choice == "library":
+            print("you go to library")
+            library()
+
+
+def library():
+    locations = ("ebathroom", "gym", "library")
+    choice = ""
+    while choice not in locations:
+        choice = input("to ebathroom or gym?\n")
+        if choice == "ebathroom":
+            print("you go to ebathroom")
+            ebath()
+        if choice == "gym":
+            print("you go to gym")
+            gym()
+
+
+ebath()

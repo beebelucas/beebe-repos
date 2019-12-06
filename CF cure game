@@ -1,0 +1,169 @@
+import time
+import random
+from random import randint
+choice1 = ["yes", "no"]
+choice = ["1", "2", "3", "help", "stats"]
+help = ("Here's how you play: \n"
+        "type '1' to conduct research \ntype '2' to buy supplies \n"
+        "type '3' to test chemicals\neach time you test you have a chance of finding a cure\nbut low research can "
+        "result in a test that ends your career\ntype 'help' to read this at any time "
+        "and 'stats' to see your statistics")
+print("WELCOME TO 'THE CURE'")
+time.sleep(1.5)
+
+days = 50
+
+
+def name_length():
+    name = input("What is your name?\n--> ").strip()
+    if len(name) > 10:
+        print("too many characters")
+        name_length()
+    if len(name) <= 10:
+        print("Welcome, " + name + " you need to cure cystic fibrosis in " + str(days) + " days")
+
+
+time.sleep(2)
+print(help)
+print("")
+name_length()
+supplies = 0
+research = 0
+cure_number1 = randint(1, 400)
+cure_number2 = randint(1, 50)
+cure_number3 = randint(1, 10)
+cure_number4 = randint(1, 5)
+cure_number5 = randint(1, 2)
+cure_number6 = 1
+
+
+def everyday():
+    global cure_number1
+    global cure_number2
+    global cure_number3
+    global cure_number4
+    global cure_number5
+    global cure_number6
+    global days
+    global research
+    global supplies
+    days_left = str(days) + " days left"
+    give_supplies = "You now have " + str(supplies) + " supplies"
+    response = ""
+    stats = ("research/experience: " + str(research) + "\n supplies: " + str(supplies) + " days left: " + str(days_left))
+    give_research = "You now have " + str(research) + " research points"
+    response = ""
+    itday = "you have " + str(days) + " days left"
+    lastday = "you had " + str(days) + " days left"
+    supplies_left = "you now have " + str(supplies) + " supplies left"
+    while response not in choice and days > 0:
+        response = input("what do you wish to do today. " + itday + "\n--> ")
+        if response == "1" and supplies >= 0 and research <= 3000:
+            print("you chose to conduct research today")
+            days -= 1
+            research += 25
+            supplies -= 100
+            print(give_research)
+            print(supplies_left)
+            everyday()
+        if response == "1" and supplies <= 0:
+            print("you don't have enough supplies to do this")
+            everyday()
+        if response == "1" and research > 3000 and supplies >= 0:
+            print("You chose to conduct research, but you need to start testing soon")
+            days -= 1
+            research += 25
+            supplies -= 100
+            print(give_research)
+            print(supplies_left)
+            everyday()
+        if response == "2" and supplies < 2000:
+            print("you chose to buy supplies today")
+            days -= 1
+            supplies += 200
+            print(give_supplies)
+            everyday()
+        if response == "2" and supplies >= 2000:
+            print("you have chosen to buy supplies today, though you should start doing some research")
+            days -= 1
+            supplies += 200
+            print(give_supplies)
+            everyday()
+        if response == "3":
+            print("you chose to do testing today")
+            if 0 <= research <= 100 and cure_number1 == 350:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                everyday()
+            if 100 < research <= 200 and cure_number2 == 14:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                supplies -= 100
+                everyday()
+            if 200 < research <= 400 and cure_number2 == 2:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                supplies -= 100
+                everyday()
+            if 400 < research <= 800 and cure_number3 == 3:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                supplies -= 100
+                everyday()
+            if 800 < research <= 1200 and cure_number4 == 2:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                supplies -= 100
+                everyday()
+            if research > 1200:
+                print("you found the cure!!!")
+                print("Congratulations, you are a national hero")
+                print(lastday)
+                quit()
+            else:
+                print("sorry the testing didn't go to well today")
+                days -= 1
+                supplies -= 100
+                everyday()
+        if response == "help":
+            print(help)
+            everyday()
+        if response == "stats":
+            print(stats)
+            everyday()
+        if days <= 0:
+            print("you have now run out of days and failed to accomplish what was really your only mission in life")
+            print("goodbye")
+            quit()
+        else:
+            print("sorry I didn't understand the command")
+            everyday()
+
+
+everyday()
+

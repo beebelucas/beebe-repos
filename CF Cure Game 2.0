@@ -1,0 +1,281 @@
+# imports
+
+import time
+import random
+from random import randint
+
+# variables
+days_left = 50
+# player class
+
+
+class Player:
+    def __init__(self, name, age, research, supplies, colleagues):
+        self.name = name
+        self.age = age
+        self.research = research
+        self.supplies = supplies
+        self.colleagues = colleagues
+
+    def get_name(self):
+        self.name = input("What is your name?\n--> ").strip().title()
+        print("Welcome " + self.name)
+        self.age = input("How old are you?\n--> ")
+        help1()
+
+    def new_colleague(self):
+        asked_name = True
+        asked_name2 = True
+        if len(self.colleagues) < 2:
+            print("A new colleague has been given to you in order to speed research")
+            time.sleep(2)
+            while asked_name:
+                asked_name2 = True
+                coll_name = input("What should be his name?\n--> ").strip().title()
+                while asked_name2:
+                    ask_for_sure = input("Are you sure that's what you want your colleague's name to be?(yes/no)\n--> ")
+                    if ask_for_sure == "yes":
+                        print("Your new colleague is " + coll_name)
+                        print("He will help increase research")
+                        if len(self.colleagues) == 0:
+                            self.colleagues['colleague1'] = coll_name
+                        elif len(self.colleagues) == 1:
+                            self.colleagues['colleague2'] = coll_name
+                        asked_name2 = False
+                        asked_name = False
+                    elif ask_for_sure == "no":
+                        print("That's okay:)")
+                        asked_name = True
+                        asked_name2 = False
+                    else:
+                        print("sorry I didn't understand that")
+                        asked_name = False
+        else:
+            print("That's too bad you already have two colleagues and don't have room for any more")
+            main_func()
+
+
+player1 = Player('', '', 0, 0, {})
+
+# functions
+
+
+def intro():
+    global player1
+    print("Welcome to The Cure 2.0")
+    print("Where you become a chemist looking to find a cure for Cystic Fibrosis")
+    print("created by: Lucas Beebe")
+    player1.get_name()
+
+
+def win_game():
+    global player1
+    play = False
+    global days_left
+    print("Waiting to get the test results back...\n")
+    time.sleep(2.5)
+    print("Your test was successful and you have found the cure!!!")
+    print("At the age of " + str(player1.age) + " you have completed your everlasting achievement")
+    print("You beat the game with " + str(days_left) + " days left")
+    print("To help find the cure in real life, look to donate to the real search for the cure at www.cff.org")
+    time.sleep(2)
+    while play is False:
+        play_again = input("Would you like to restart and try to win using less days?\n--> ")
+        if play_again == "yes":
+            play = True
+            days_left = 50
+            player1.colleagues = {}
+            intro()
+
+        elif play_again == "no":
+            quit()
+        else:
+            print("sorry I didn't understand that")
+
+
+def game_over():
+    play = False
+    global days_left
+    global player1
+    print("You have run out of days...")
+    if player1.age <= 25:
+        print("You weren't the young " + str(player1.age) + " year old phenom that everyone expected you to be")
+    elif 25 < player1.age <= 50:
+        print("Although being at the ripe age of " + str(player1.age) + ", you weren't able to get the job done in the prime of your career")
+    elif 50 < player1.age <= 65:
+        print("At the age of " + str(player1.age) + ", in the tail end of your career, you weren't able to get the job done")
+    elif player1.age > 65:
+        print("Even as one of the oldest chemists in your field, at the age of " + str(player1.age) + ", you didn't have the wisdom to get the job done" )
+    time.sleep(1)
+    print("GAME OVER")
+
+    time.sleep(1)
+    while play is False:
+        play_again = input("Would you like to restart and try to redeem yourself?\n--> ")
+        if play_again == "yes":
+            play = True
+            days_left = 50
+            player1.colleagues = {}
+            intro()
+
+        elif play_again == "no":
+            quit()
+        else:
+            print("sorry I didn't understand that")
+
+
+def num_func_coll():
+    num1 = random.randint(0, 15)
+    num2 = random.randint(0, 15)
+    if num1 == num2:
+        print("A colleague has seen your work and wants to join the cause")
+        player1.new_colleague()
+    else:
+        pass
+
+
+def num_func_test():
+    global player1
+    global days_left
+    print("Waiting to get the test results back...\n")
+    time.sleep(2.5)
+    if player1.research <= 200:
+        num1 = randint(0, 50)
+        num2 = randint(0, 50)
+        if num1 == num2:
+            win_game()
+        else:
+            print("The testing didn't go as planned")
+            days_left -= 1
+            if days_left > 0:
+                print("You have " + str(days_left) + " days left")
+            else:
+                game_over()
+    elif 1000 >= player1.research > 200:
+        num1 = randint(0, 30)
+        num2 = randint(0, 30)
+        if num1 == num2:
+            win_game()
+        else:
+            print("The testing didn't go as planned")
+            days_left -= 1
+            if days_left > 0:
+                print("You have " + str(days_left) + " days left")
+            else:
+                game_over()
+    elif 2000 >= player1.research > 1000:
+        num1 = randint(0, 8)
+        num2 = randint(0, 8)
+        if num1 == num2:
+            win_game()
+        else:
+            print("The testing didn't go as planned")
+            days_left -= 1
+            if days_left > 0:
+                print("You have " + str(days_left) + " days left")
+            else:
+                game_over()
+    elif player1.research > 2000:
+        num1 = randint(0, 3)
+        num2 = randint(0, 3)
+        if num1 == num2:
+            win_game()
+        else:
+            print("The testing didn't go as planned")
+            days_left -= 1
+            if days_left > 0:
+                print("You have " + str(days_left) + " days left")
+            else:
+                game_over()
+
+
+def help1():
+    rules = ["Everyday you pick a 1, 2, or 3 to either conduct research, buy supplies, or test", "You need supplies to conduct research and "
+         "higher research leads to better test odds", "If your test is successful you win the game and find the cure", "You have 50 days"
+         " to find the cure or you lose"]
+    print("Here's how you play the game:\n")
+    for rule in rules:
+        print(rule)
+    main_func()
+
+
+def help_():
+    rules = ["Everyday you pick a 1, 2, or 3 to either conduct research, buy supplies, or test research", "You need supplies to conduct research and"
+         " higher research leads to better test odds", "If your test is successful you win the game and find the cure", "You have 50 days"
+         " to find the cure or you lose"]
+    print("Here's how you play the game:\n")
+    for rule in rules:
+        print(rule)
+        main_func()
+
+
+def main_func():
+    global player1
+    global days_left
+    everyday = input("\nYou have " + str(days_left) + " days left. What would you like to do today?\n--> ")
+    if everyday == '1':
+        if player1.supplies >= 25 and len(player1.colleagues) == 0:
+            print("You conduct research today")
+            player1.supplies -= 25
+            player1.research += 50
+            print("You now have " + str(player1.supplies) + " supplies left and " + str(player1.research) + " research points")
+            days_left -= 1
+            if days_left == 0:
+                game_over()
+            num_func_coll()
+            main_func()
+        elif player1.supplies >= 25 and len(player1.colleagues) == 1:
+            print("You conduct research today")
+            player1.supplies -= 25
+            player1.research += 100
+            print("Thanks to your colleague, You now have " + str(player1.supplies) + " supplies left and " + str(player1.research) + " research points")
+            days_left -= 1
+            if days_left == 0:
+                game_over()
+            num_func_coll()
+            main_func()
+        elif player1.supplies >= 25 and len(player1.colleagues) == 2:
+            print("You conduct research today")
+            player1.supplies -= 25
+            player1.research += 200
+            print("Thanks to your two colleagues, You now have " + str(player1.supplies) + " supplies left and " + str(player1.research) + " research points")
+            days_left -= 1
+            if days_left == 0:
+                game_over()
+            num_func_coll()
+            main_func()
+        else:
+            print("You don't have enough supplies to conduct research")
+            print("Buy more supplies and try again tomorrow")
+            main_func()
+    elif everyday == '2':
+        print("You bought supplies today")
+        player1.supplies += 100
+        print("You now have " + str(player1.supplies) + " supplies")
+        days_left -= 1
+        print("You have " + str(days_left) + " days left")
+        if days_left == 0:
+            game_over()
+        else:
+            pass
+        num_func_coll()
+        main_func()
+    elif everyday == '3':
+        print("You chose to conduct experimental testing today")
+        num_func_test()
+        num_func_coll()
+        main_func()
+    elif everyday == 'help':
+        help_()
+        main_func()
+    elif everyday == 'restart':
+        days_left = 100
+        intro()
+    else:
+        print("Sorry I didn't understand that")
+        main_func()
+
+
+intro()
+
+
